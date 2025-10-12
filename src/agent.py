@@ -338,7 +338,6 @@ async def entrypoint(ctx: JobContext):
         ),
         preemptive_generation=True,
         mcp_servers=[
-          # mcp.MCPServerStdio(command="uvx", args="osm-mcp-server"),
           mcp.MCPServerHTTP(
               url=MCP_SERVER_URL
           )
@@ -364,7 +363,7 @@ async def entrypoint(ctx: JobContext):
     # Add a virtual avatar to the session
     # For other providers, see https://docs.livekit.io/agents/models/avatar/
     # AVATAR_ID = "5c28ac9b-a90d-43d0-a820-9adfe0ba0c8d"
-    DEFAULT_AVATAR_ID = "b9be11b8-89fb-4227-8f86-4a881393cbdb"
+    DEFAULT_AVATAR_ID = "694c83e2-8895-4a98-bd16-56332ca3f449"
     avatar = bey.AvatarSession(avatar_id=DEFAULT_AVATAR_ID,)
 
     # Start the avatar and wait for it to join
