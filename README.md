@@ -2,15 +2,17 @@
   <img src="./.github/assets/livekit-mark.png" alt="LiveKit logo" width="100" height="100">
 </a>
 
-# Voira - LiveKit Agents Python with Weaviate and Beyond Presence, AssemblyAI, Cartesia, OpenAI, and MCP Servers (ACI/Gate22)
+# Voira - LiveKit Agents Python with Weaviate RAG and Beyond Presence, AssemblyAI, Cartesia, OpenAI, and MCP Servers (ACI/Gate22)
 
-A complete starter project for building voice AI apps with [LiveKit Agents for Python](https://github.com/livekit/agents) and [LiveKit Cloud](https://cloud.livekit.io/).
+A complete starter project for building voice AI apps with [LiveKit Agents for Python](https://github.com/livekit/agents) and [LiveKit Cloud](https://cloud.livekit.io/), featuring integrated RAG (Retrieval-Augmented Generation) capabilities with Weaviate Cloud.
 
 The starter project includes:
 
-- A simple voice AI assistant, ready for extension and customization
+- A voice AI assistant with **RAG-powered knowledge base search**, ready for extension and customization
+- **Document ingestion via NextJS API** with tenant-specific collections in Weaviate Cloud
 - A voice AI pipeline with [models](https://docs.livekit.io/agents/models) from OpenAI, Cartesia, and AssemblyAI served through LiveKit Cloud
   - Easily integrate your preferred [LLM](https://docs.livekit.io/agents/models/llm/), [STT](https://docs.livekit.io/agents/models/stt/), and [TTS](https://docs.livekit.io/agents/models/tts/) instead, or swap to a realtime model like the [OpenAI Realtime API](https://docs.livekit.io/agents/models/realtime/openai)
+- **Weaviate Cloud integration** for vector database and semantic search
 - Eval suite based on the LiveKit Agents [testing & evaluation framework](https://docs.livekit.io/agents/build/testing/)
 - [LiveKit Turn Detector](https://docs.livekit.io/agents/build/turns/turn-detector/) for contextually-aware speaker detection, with multilingual support
 - [Background voice cancellation](https://docs.livekit.io/home/cloud/noise-cancellation/)
@@ -18,6 +20,39 @@ The starter project includes:
 - A Dockerfile ready for [production deployment](https://docs.livekit.io/agents/ops/deployment/)
 
 This starter app is compatible with any [custom web/mobile frontend](https://docs.livekit.io/agents/start/frontend/) or [SIP-based telephony](https://docs.livekit.io/agents/start/telephony/).
+
+## RAG & Document Ingestion
+
+Voira includes built-in support for Retrieval-Augmented Generation (RAG) using Weaviate Cloud:
+
+- **NextJS Ingestion API**: Upload documents (`.txt`, `.md`) via `/api/ingest` endpoint
+- **Tenant Isolation**: Each tenant gets their own collection (`Documents_{tenantId}`)
+- **Automatic Vectorization**: Uses OpenAI `text-embedding-3-small` for embeddings
+- **Agent Integration**: Voice agent can search knowledge base during conversations
+- **Semantic Search**: Find relevant information using natural language queries
+
+### Quick Start
+
+1. Set up Weaviate Cloud and add credentials to `.env.local`:
+   ```bash
+   WEAVIATE_URL=https://your-cluster.weaviate.network
+   WEAVIATE_API_KEY=your-api-key
+   OPENAI_API_KEY=your-openai-key
+   ```
+
+2. Ingest documents via the API:
+   ```bash
+   curl -X POST http://localhost:3000/api/ingest \
+     -H "Content-Type: application/json" \
+     -d '{
+       "tenantId": "my_company",
+       "documents": [{"filename": "services.txt", "content": "We offer..."}]
+     }'
+   ```
+
+3. The agent will automatically search the knowledge base when relevant
+
+See [docs/ingestion_example.md](docs/ingestion_example.md) for detailed usage examples and [ENVIRONMENT_VARIABLES.md](ENVIRONMENT_VARIABLES.md) for configuration details.
 
 ## Dev Setup
 

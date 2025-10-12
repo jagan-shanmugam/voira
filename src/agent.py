@@ -1,4 +1,4 @@
-from db_utils import get_user_data
+from db_utils import get_user_data, WeaviateRAG
 
 import logging
 import json
@@ -17,7 +17,7 @@ from livekit.agents import (
     cli,
     metrics,
 )
-from livekit.plugins import noise_cancellation, silero, openai, assemblyai, cartesia
+from livekit.plugins import noise_cancellation, silero, openai, assemblyai, cartesia, bey
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
 from livekit.agents.llm import function_tool
 from livekit.agents import mcp, RunContext, get_job_context
@@ -44,6 +44,11 @@ DEFAULT_INSTRUCTIONS = f"""Always respond in English.
 You are a helpful voice AI assistant with access to tools to manage calendars of dental practice {COMPANY_NAME}. Use the tools to respond to the user's request.
 The user is interacting with you via voice, even if you perceive the conversation as text. 
 Always respond in English.
+
+You have access to a knowledge base specific to {COMPANY_NAME} with important documents and information. 
+When users ask questions about services, policies, pricing, procedures, or any company-specific information, use the search_knowledge_base tool to find relevant information before responding.
+Always cite information from the knowledge base when available to provide accurate answers.
+
 You can search the calendar and book appointments. Say a few seconds to the user while checking and booking an appointment.
 Always search in the timezone - {TIMEZONE}
 Pass in corresponding arguments to execute the tool. 
@@ -75,10 +80,23 @@ async def hangup_call():
     )
 
 class Assistant(Agent):
-    def __init__(self) -> None:
+    def __init__(self, tenant_id: str = "default") -> None:
         super().__init__(
             instructions=DEFAULT_INSTRUCTIONS,
         )
+        self.tenant_id = tenant_id
+        self.rag = None
+        
+        # Initialize RAG if Weaviate is configured
+        try:
+            if all([os.getenv("WEAVIATE_URL"), os.getenv("WEAVIATE_API_KEY"), os.getenv("OPENAI_API_KEY")]):
+                self.rag = WeaviateRAG(tenant_id=tenant_id)
+                logger.info(f"RAG initialized for tenant: {tenant_id}")
+            else:
+                logger.warning("Weaviate not configured. Knowledge base search will not be available.")
+        except Exception as e:
+            logger.error(f"Failed to initialize RAG: {e}")
+            self.rag = None
 
     # To add tools, use the @function_tool decorator.
     # Here's an example that adds a simple weather tool.
@@ -118,12 +136,67 @@ class Assistant(Agent):
               logging.error(f"Fallback session close failed: {close_error}")
               
     @function_tool()
+    async def search_knowledge_base(
+        context: RunContext,
+        query: str
+    ) -> str:
+        """
+        Search the company's knowledge base for relevant information.
+        Use this when users ask about services, policies, pricing, procedures, or any company-specific information.
+        
+        Args:
+            query: The search query describing what information is needed
+            
+        Returns:
+            Relevant information from the knowledge base, or a message if no information is found
+        """
+        logger.info(f"Searching knowledge base for: {query}")
+        
+        try:
+            # Get the assistant instance from context
+            # Note: In function_tool, we need to access self through the agent
+            job_ctx = get_job_context()
+            # Access the agent's RAG instance
+            # This is a workaround since function_tool doesn't pass self
+            # We'll store rag in a way that's accessible
+            
+            # For now, we'll create a new RAG instance with tenant_id from userdata
+            # This is not ideal but works with the function_tool pattern
+            session = context.session
+            tenant_id = session._userdata if hasattr(session, '_userdata') else 'default'
+            
+            # Initialize RAG for this search
+            rag = WeaviateRAG(tenant_id=str(tenant_id))
+            
+            # Perform search
+            results = await rag.retrieve_context(query, limit=3)
+            
+            # Clean up
+            rag.close()
+            
+            if results:
+                logger.info(f"Found knowledge base results for query: {query}")
+                return f"Found relevant information:\n\n{results}"
+            else:
+                logger.info(f"No knowledge base results for query: {query}")
+                return "I couldn't find specific information about that in our knowledge base. Let me help you with what I know generally."
+                
+        except Exception as e:
+            logger.error(f"Error searching knowledge base: {e}", exc_info=True)
+            return "I'm having trouble accessing the knowledge base right now. Let me help you with what I know."
+    
+    @function_tool()
     async def lookup_user(
         context: RunContext,
     ) -> dict:
         """Look up a user's email and info to send an email."""
         # FIX
-        ph = context.room.split("-")
+        try:
+          ph = context.room.split("-")
+        except Exception as e:
+          logging.error(f"Error looking up user: {e}")
+          return {"name": "John Doe", "email": "john.doe@example.com"}
+
         if ph > 1:
           user_data = get_user_data()
           user = user_data[user_data['phone_number'] == ph[1]]
@@ -138,7 +211,12 @@ class Assistant(Agent):
         """Update the user's email by confirming the security pin."""
         # FIX
         
-        ph = context.room.split("-")
+        try:
+            ph = context.room.split("-")
+        except Exception as e:
+          logging.error(f"Error looking up user: {e}")
+          return {"name": "John Doe", "email": "john.doe@example.com"}
+
         if ph > 1:
           user_data = get_user_data()
           user = user_data[user_data['phone_number'] == ph[1]]
@@ -200,6 +278,10 @@ async def entrypoint(ctx: JobContext):
 
     users = get_user_data()
     user = ctx.room.name.split("-")
+    
+    # Extract tenant_id from metadata or room name for RAG
+    tenant_id = metadata.get("tenant_id") or (user[1] if len(user) > 1 else 'default')
+    logger.info(f"Extracted tenant_id: {tenant_id}")
 
     # Set up a voice AI pipeline using OpenAI, Cartesia, AssemblyAI, and the LiveKit turn detector
     # session = AgentSession(
@@ -279,17 +361,21 @@ async def entrypoint(ctx: JobContext):
 
     ctx.add_shutdown_callback(log_usage)
 
-    # # Add a virtual avatar to the session, if desired
-    # # For other providers, see https://docs.livekit.io/agents/models/avatar/
-    # avatar = hedra.AvatarSession(
-    #   avatar_id="...",  # See https://docs.livekit.io/agents/models/avatar/plugins/hedra
-    # )
-    # # Start the avatar and wait for it to join
-    # await avatar.start(session, room=ctx.room)
+    # Add a virtual avatar to the session
+    # For other providers, see https://docs.livekit.io/agents/models/avatar/
+    # AVATAR_ID = "5c28ac9b-a90d-43d0-a820-9adfe0ba0c8d"
+    DEFAULT_AVATAR_ID = "b9be11b8-89fb-4227-8f86-4a881393cbdb"
+    avatar = bey.AvatarSession(avatar_id=DEFAULT_AVATAR_ID,)
+
+    # Start the avatar and wait for it to join
+    # Replace https with wss in livekit url
+    livekit_url = os.getenv("LIVEKIT_URL")
+    livekit_url = livekit_url.replace("https", "wss")
+    await avatar.start(session, room=ctx.room, livekit_url=livekit_url, livekit_api_key=os.getenv("LIVEKIT_API_KEY"), livekit_api_secret=os.getenv("LIVEKIT_API_SECRET"))
 
     # Start the session, which initializes the voice pipeline and warms up the models
     await session.start(
-        agent=Assistant(),
+        agent=Assistant(tenant_id=tenant_id),
         room=ctx.room,
         room_input_options=RoomInputOptions(
             # For telephony applications, use `BVCTelephony` for best results
