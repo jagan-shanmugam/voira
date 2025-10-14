@@ -4,6 +4,10 @@
 
 # Voira - LiveKit Agents Python with Weaviate RAG and Beyond Presence, AssemblyAI, Cartesia, OpenAI, and MCP Servers (ACI/Gate22)
 
+## TL;DR
+
+Build production-ready voice AI agents in minutes. Voira combines LiveKit Agents for Python with a Next.js web embed, Weaviate-powered RAG, and turnkey telephony to deliver real-time, low-latency conversations grounded in your data. Swap LLM/STT/TTS models, ingest tenant-scoped documents, and deploy with a single Dockerfile.
+
 A complete starter project for building voice AI apps with [LiveKit Agents for Python](https://github.com/livekit/agents) and [LiveKit Cloud](https://cloud.livekit.io/), featuring integrated RAG (Retrieval-Augmented Generation) capabilities with Weaviate Cloud.
 
 The starter project includes:
@@ -138,7 +142,38 @@ Once you've started your own project based on this repo, you should:
 
 ## Deploying to production
 
-This project is production-ready and includes a working `Dockerfile`. To deploy it to LiveKit Cloud or another environment, see the [deploying to production](https://docs.livekit.io/agents/ops/deployment/) guide.
+### Backend Deployment (Python Agent)
+
+The Python agent is production-ready and includes a working `Dockerfile`. To deploy it to LiveKit Cloud or another environment, see the [deploying to production](https://docs.livekit.io/agents/ops/deployment/) guide.
+
+### Frontend Deployment (Next.js on Vercel)
+
+The Next.js frontend can be easily deployed to Vercel:
+
+**Quick Deploy:**
+
+1. **Import to Vercel**: [vercel.com/new](https://vercel.com/new)
+2. **Root Directory**: Set to `frontend` ⚠️
+3. **Environment Variables**: Add these in Vercel dashboard:
+   ```bash
+   LIVEKIT_URL=wss://your-project.livekit.cloud
+   LIVEKIT_API_KEY=your-api-key
+   LIVEKIT_API_SECRET=your-secret
+   WEAVIATE_URL=https://your-cluster.weaviate.network
+   WEAVIATE_API_KEY=your-weaviate-key
+   OPENAI_API_KEY=sk-your-openai-key
+   ```
+4. **Deploy**: Click Deploy and wait ~2 minutes
+
+For detailed deployment instructions, troubleshooting, and best practices, see [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md).
+
+**Architecture After Deployment:**
+```
+Users → Vercel (Next.js Frontend)
+         ├─→ LiveKit Cloud (Voice Agent Backend)
+         ├─→ Weaviate Cloud (RAG/Vector DB)
+         └─→ OpenAI (Embeddings)
+```
 
 ## Self-hosted LiveKit
 
