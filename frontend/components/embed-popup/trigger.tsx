@@ -81,10 +81,12 @@ export function Trigger({ error = null, popupOpen, onToggle }: TriggerProps) {
                 <div
                   className="bg-bg1 size-5"
                   // webpack build throws if I use custom tailwind classes to achive this
-                  style={{
-                    // maskImage: 'url(/lk-logo.svg)',
-                    maskSize: 'contain',
-                  }}
+                  style={
+                    {
+                      // maskImage: 'url(/lk-logo.svg)',
+                      // maskSize: 'contain',
+                    }
+                  }
                 />
               </motion.div>
             )}
