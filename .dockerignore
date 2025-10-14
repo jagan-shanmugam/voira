@@ -1,3 +1,7 @@
+# NextJS
+frontend/
+
+# Python
 # Python bytecode and artifacts
 __pycache__/
 *.py[cod]
