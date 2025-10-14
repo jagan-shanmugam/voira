@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { SuccessMessage } from '@/components/ui/success-message';
+import Image from 'next/image';
 
 interface ScrapedData {
   practiceName?: string;
@@ -138,13 +139,17 @@ export function StepWebsite({ onNext }: StepWebsiteProps) {
               <Button variant="outline" disabled>
                 <LoadingSpinner size="sm" className="mr-2" />
                 Reimagining your site with Lovable
-                <img src="/lovable-icon.png" alt="Lovable" className="ml-2 h-4 w-4" />
+                <Image src="/lovable-icon.png" alt="Lovable" className="ml-2 h-4 w-4" />
+                width={16}
+                height={16}
               </Button>
             )}
             {showLovableCta && !showLovableSpinner && (
               <Button variant="outline" onClick={handleLovable}>
                 Your Website reimagined with Lovable
-                <img src="/lovable-icon.png" alt="Lovable" className="ml-2 h-4 w-4" />
+                <Image src="/lovable-icon.png" alt="Lovable" className="ml-2 h-4 w-4" />
+                width={16}
+                height={16}
               </Button>
             )}
           </div>
