@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useMemo, useState } from 'react';
-import { Room, RoomEvent } from 'livekit-client';
-import { motion } from 'motion/react';
-import { RoomAudioRenderer, RoomContext, StartAudio } from '@livekit/components-react';
-import { XIcon } from '@phosphor-icons/react';
-import useConnectionDetails from '@/hooks/use-connection-details';
-import type { AppConfig, EmbedErrorDetails } from '@/lib/types';
-import { Button } from '../ui/button';
-import { SessionView } from './session-view';
-import { WelcomeView } from './welcome-view';
+import { useEffect, useMemo, useState } from "react";
+import { Room, RoomEvent } from "livekit-client";
+import { motion } from "motion/react";
+import { RoomAudioRenderer, RoomContext, StartAudio } from "@livekit/components-react";
+import { XIcon } from "@phosphor-icons/react";
+import useConnectionDetails from "@/hooks/use-connection-details";
+import type { AppConfig, EmbedErrorDetails } from "@/lib/types";
+import { Button } from "../ui/button";
+import { SessionView } from "./session-view";
+import { WelcomeView } from "./welcome-view";
 
 const MotionWelcomeView = motion.create(WelcomeView);
 const MotionSessionView = motion.create(SessionView);
@@ -32,7 +32,7 @@ function EmbedAgentClient({ appConfig }: AppProps) {
     };
     const onMediaDevicesError = (error: Error) => {
       setCurrentError({
-        title: 'Encountered an error with your media devices',
+        title: "Encountered an error with your media devices",
         description: `${error.name}: ${error.message}`,
       });
     };
@@ -48,7 +48,7 @@ function EmbedAgentClient({ appConfig }: AppProps) {
     if (!sessionStarted) {
       return;
     }
-    if (room.state !== 'disconnected') {
+    if (room.state !== "disconnected") {
       return;
     }
     if (!connectionDetails) {
@@ -63,9 +63,9 @@ function EmbedAgentClient({ appConfig }: AppProps) {
         });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-        console.error('Error connecting to agent:', error);
+        console.error("Error connecting to agent:", error);
         setCurrentError({
-          title: 'There was an error connecting to the agent',
+          title: "There was an error connecting to the agent",
           description: `${error.name}: ${error.message}`,
         });
       }
@@ -86,20 +86,20 @@ function EmbedAgentClient({ appConfig }: AppProps) {
         initial={{ opacity: 1 }}
         animate={{
           opacity: !sessionStarted && currentError === null ? 1 : 0,
-          pointerEvents: !sessionStarted && currentError === null ? 'auto' : 'none',
+          pointerEvents: !sessionStarted && currentError === null ? "auto" : "none",
         }}
         transition={{
           duration: 0.25,
-          ease: 'linear',
+          ease: "linear",
           delay: !sessionStarted && currentError === null ? 0.5 : 0,
         }}
       />
 
       <motion.div
-        initial={{ opacity: 0, pointerEvents: 'none' }}
+        initial={{ opacity: 0, pointerEvents: "none" }}
         animate={{
           opacity: currentError !== null ? 1 : 0,
-          pointerEvents: currentError !== null ? 'auto' : 'none',
+          pointerEvents: currentError !== null ? "auto" : "none",
         }}
         className="h-full w-full"
       >
@@ -135,11 +135,11 @@ function EmbedAgentClient({ appConfig }: AppProps) {
           initial={{ opacity: 0 }}
           animate={{
             opacity: sessionStarted && currentError === null ? 1 : 0,
-            pointerEvents: sessionStarted && currentError === null ? 'auto' : 'none',
+            pointerEvents: sessionStarted && currentError === null ? "auto" : "none",
           }}
           transition={{
             duration: 0.5,
-            ease: 'linear',
+            ease: "linear",
             delay: sessionStarted && currentError === null ? 0.25 : 0,
           }}
         />

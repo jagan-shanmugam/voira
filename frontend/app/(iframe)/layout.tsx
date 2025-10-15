@@ -1,4 +1,4 @@
-import { RootLayout } from '@/components/root-layout';
+import { RootLayout } from "@/components/root-layout";
 
 interface RootLayoutProps {
   children: React.ReactNode;

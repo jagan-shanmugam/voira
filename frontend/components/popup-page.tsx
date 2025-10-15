@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useMemo } from 'react';
-import Script from 'next/script';
-import { HandPointingIcon } from '@phosphor-icons/react';
-import { ThemeToggle } from '@/components/theme-toggle';
-import { getSandboxId } from '@/lib/env';
+import { useMemo } from "react";
+import Script from "next/script";
+import { HandPointingIcon } from "@phosphor-icons/react";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { getSandboxId } from "@/lib/env";
 
 export default function PopupPage() {
   const sandboxId = useMemo(() => getSandboxId(window.location.origin), []);

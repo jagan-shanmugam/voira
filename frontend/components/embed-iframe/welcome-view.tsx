@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
 type WelcomeViewProps = {
   disabled: boolean;
@@ -9,7 +9,7 @@ export const WelcomeView = ({
   disabled,
   onStartCall,
   ref,
-}: React.ComponentProps<'div'> & WelcomeViewProps) => {
+}: React.ComponentProps<"div"> & WelcomeViewProps) => {
   return (
     <div ref={ref} inert={disabled} className="absolute inset-0">
       <div className="flex h-full items-center justify-between gap-4 px-3">

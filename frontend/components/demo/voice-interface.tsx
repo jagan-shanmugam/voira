@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Room, RoomEvent } from 'livekit-client';
-import { motion } from 'motion/react';
-import { RoomAudioRenderer, RoomContext, StartAudio } from '@livekit/components-react';
-import { APP_CONFIG_DEFAULTS } from '@/app-config';
-import { ErrorMessage } from '@/components/embed-popup/error-message';
-import { PopupView } from '@/components/embed-popup/popup-view';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
-import useConnectionDetails from '@/hooks/use-connection-details';
-import { type EmbedErrorDetails } from '@/lib/types';
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Room, RoomEvent } from "livekit-client";
+import { motion } from "motion/react";
+import { RoomAudioRenderer, RoomContext, StartAudio } from "@livekit/components-react";
+import { APP_CONFIG_DEFAULTS } from "@/app-config";
+import { ErrorMessage } from "@/components/embed-popup/error-message";
+import { PopupView } from "@/components/embed-popup/popup-view";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import useConnectionDetails from "@/hooks/use-connection-details";
+import { type EmbedErrorDetails } from "@/lib/types";
 
 const PopupViewMotion = motion.create(PopupView);
 
@@ -23,20 +23,20 @@ interface VoiceInterfaceProps {
 
 export function VoiceInterface({ isOpen, onClose, agentName }: VoiceInterfaceProps) {
   const [connecting, setConnecting] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   // Simulate connection delay for non-avatar agents
   useState(() => {
-    if (isOpen && agentName !== 'Avatar Agent') {
+    if (isOpen && agentName !== "Avatar Agent") {
       setConnecting(true);
-      setError('');
+      setError("");
       setTimeout(() => {
         setConnecting(false);
       }, 1500);
     }
   });
 
-  const isAvatarAgent = agentName === 'Avatar Agent';
+  const isAvatarAgent = agentName === "Avatar Agent";
 
   // Avatar Agent popup implementation
   const isAnimating = useRef(false);
@@ -51,7 +51,7 @@ export function VoiceInterface({ isOpen, onClose, agentName }: VoiceInterfacePro
 
   const handlePanelAnimationComplete = () => {
     isAnimating.current = false;
-    if (!isOpen && room.state !== 'disconnected') {
+    if (!isOpen && room.state !== "disconnected") {
       room.disconnect();
     }
   };
@@ -65,7 +65,7 @@ export function VoiceInterface({ isOpen, onClose, agentName }: VoiceInterfacePro
     };
     const onMediaDevicesError = (error: Error) => {
       setEmbedError({
-        title: 'Encountered an error with your media devices',
+        title: "Encountered an error with your media devices",
         description: `${error.name}: ${error.message}`,
       });
     };
@@ -81,7 +81,7 @@ export function VoiceInterface({ isOpen, onClose, agentName }: VoiceInterfacePro
     if (!isAvatarAgent || !isOpen) {
       return;
     }
-    if (room.state !== 'disconnected') {
+    if (room.state !== "disconnected") {
       return;
     }
 
@@ -90,8 +90,8 @@ export function VoiceInterface({ isOpen, onClose, agentName }: VoiceInterfacePro
         const details = await existingOrRefreshConnectionDetails();
         if (!details) {
           setEmbedError({
-            title: 'Error fetching connection details',
-            description: 'Please try again later',
+            title: "Error fetching connection details",
+            description: "Please try again later",
           });
           return;
         }
@@ -104,9 +104,9 @@ export function VoiceInterface({ isOpen, onClose, agentName }: VoiceInterfacePro
         ]);
       } catch (error) {
         if (error instanceof Error) {
-          console.error('Error connecting to agent:', error);
+          console.error("Error connecting to agent:", error);
           setEmbedError({
-            title: 'There was an error connecting to the agent',
+            title: "There was an error connecting to the agent",
             description: `${error.name}: ${error.message}`,
           });
         }
@@ -140,7 +140,7 @@ export function VoiceInterface({ isOpen, onClose, agentName }: VoiceInterfacePro
               translateY: isOpen ? 0 : 8,
             }}
             transition={{
-              type: 'spring',
+              type: "spring",
               bounce: 0,
               duration: isOpen ? 1 : 0.2,
             }}
@@ -157,7 +157,7 @@ export function VoiceInterface({ isOpen, onClose, agentName }: VoiceInterfacePro
                     initial={{ opacity: 1 }}
                     animate={{ opacity: embedError === null ? 1 : 0 }}
                     transition={{
-                      type: 'linear',
+                      type: "linear",
                       duration: 0.2,
                     }}
                     disabled={!isOpen}

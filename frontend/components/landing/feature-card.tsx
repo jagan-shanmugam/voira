@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { type ReactNode } from 'react';
-import { motion } from 'motion/react';
-import { Card } from '@/components/ui/card';
+import { type ReactNode } from "react";
+import { motion } from "motion/react";
+import { Card } from "@/components/ui/card";
 
 interface FeatureCardProps {
   icon: ReactNode;

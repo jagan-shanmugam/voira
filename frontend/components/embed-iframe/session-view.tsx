@@ -1,26 +1,26 @@
-'use client';
+"use client";
 
-import React, { useEffect } from 'react';
-import { Track } from 'livekit-client';
-import { motion } from 'motion/react';
+import React, { useEffect } from "react";
+import { Track } from "livekit-client";
+import { motion } from "motion/react";
 import {
   type AgentState,
   BarVisualizer,
   useRoomContext,
   useVoiceAssistant,
-} from '@livekit/components-react';
-import { PhoneDisconnectIcon } from '@phosphor-icons/react/dist/ssr';
-import { DeviceSelect } from '@/components/livekit/device-select';
-import { TrackToggle } from '@/components/livekit/track-toggle';
-import { Button } from '@/components/ui/button';
-import { useAgentControlBar } from '@/hooks/use-agent-control-bar';
-import { useDebugMode } from '@/hooks/useDebug';
-import type { AppConfig } from '@/lib/types';
-import { EmbedErrorDetails } from '@/lib/types';
-import { cn } from '@/lib/utils';
+} from "@livekit/components-react";
+import { PhoneDisconnectIcon } from "@phosphor-icons/react/dist/ssr";
+import { DeviceSelect } from "@/components/livekit/device-select";
+import { TrackToggle } from "@/components/livekit/track-toggle";
+import { Button } from "@/components/ui/button";
+import { useAgentControlBar } from "@/hooks/use-agent-control-bar";
+import { useDebugMode } from "@/hooks/useDebug";
+import type { AppConfig } from "@/lib/types";
+import { EmbedErrorDetails } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 function isAgentAvailable(agentState: AgentState) {
-  return agentState == 'listening' || agentState == 'thinking' || agentState == 'speaking';
+  return agentState == "listening" || agentState == "thinking" || agentState == "speaking";
 }
 
 type SessionViewProps = {
@@ -36,7 +36,7 @@ export const SessionView = ({
   sessionStarted,
   onDisplayError,
   ref,
-}: React.ComponentProps<'div'> & SessionViewProps) => {
+}: React.ComponentProps<"div"> & SessionViewProps) => {
   const room = useRoomContext();
   const { state: agentState, audioTrack: agentAudioTrack } = useVoiceAssistant();
   const {
@@ -67,12 +67,12 @@ export const SessionView = ({
     const timeout = setTimeout(() => {
       if (!isAgentAvailable(agentState)) {
         const reason =
-          agentState === 'connecting'
-            ? 'Agent did not join the room. '
-            : 'Agent connected but did not complete initializing. ';
+          agentState === "connecting"
+            ? "Agent did not join the room. "
+            : "Agent connected but did not complete initializing. ";
 
         onDisplayError({
-          title: 'Session ended',
+          title: "Session ended",
           description: <p className="w-full">{reason}</p>,
         });
         room.disconnect();
@@ -90,7 +90,7 @@ export const SessionView = ({
         animate={{
           opacity: sessionStarted ? 1 : 0,
         }}
-        transition={{ duration: 0.3, delay: sessionStarted ? 0.5 : 0, ease: 'easeOut' }}
+        transition={{ duration: 0.3, delay: sessionStarted ? 0.5 : 0, ease: "easeOut" }}
       >
         <div aria-label="Voice assistant controls" className="absolute inset-0">
           <div className="flex h-full flex-row items-center justify-between gap-1 px-3">
@@ -113,9 +113,9 @@ export const SessionView = ({
                     >
                       <span
                         className={cn([
-                          'h-full w-0.5 origin-center rounded-2xl',
-                          'group-data-[state=on]/track:bg-fg1 group-data-[state=off]/track:bg-destructive-foreground',
-                          'data-lk-muted:bg-muted',
+                          "h-full w-0.5 origin-center rounded-2xl",
+                          "group-data-[state=on]/track:bg-fg1 group-data-[state=off]/track:bg-destructive-foreground",
+                          "data-lk-muted:bg-muted",
                         ])}
                       ></span>
                     </BarVisualizer>
@@ -129,11 +129,11 @@ export const SessionView = ({
                     // }
                     onActiveDeviceChange={handleAudioDeviceChange}
                     className={cn([
-                      'pl-2',
-                      'peer-data-[state=off]/track:text-destructive-foreground',
-                      'hover:text-fg1 focus:text-fg1',
-                      'hover:peer-data-[state=off]/track:text-destructive-foreground focus:peer-data-[state=off]/track:text-destructive-foreground',
-                      'hidden rounded-l-none md:block',
+                      "pl-2",
+                      "peer-data-[state=off]/track:text-destructive-foreground",
+                      "hover:text-fg1 focus:text-fg1",
+                      "hover:peer-data-[state=off]/track:text-destructive-foreground focus:peer-data-[state=off]/track:text-destructive-foreground",
+                      "hidden rounded-l-none md:block",
                     ])}
                   />
                 </div>
@@ -152,9 +152,9 @@ export const SessionView = ({
                 >
                   <span
                     className={cn([
-                      'h-full w-0.5 origin-center rounded-2xl',
-                      'bg-fg1',
-                      'data-lk-muted:bg-muted',
+                      "h-full w-0.5 origin-center rounded-2xl",
+                      "bg-fg1",
+                      "data-lk-muted:bg-muted",
                     ])}
                   />
                 </BarVisualizer>

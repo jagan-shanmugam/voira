@@ -1,5 +1,5 @@
-import { type AgentState, BarVisualizer, type TrackReference } from '@livekit/components-react';
-import { cn } from '@/lib/utils';
+import { type AgentState, BarVisualizer, type TrackReference } from "@livekit/components-react";
+import { cn } from "@/lib/utils";
 
 interface AudioVisualizerProps {
   agentState: AgentState;
@@ -17,9 +17,9 @@ export function AudioVisualizer({ agentState, audioTrack }: AudioVisualizerProps
     >
       <span
         className={cn([
-          'bg-muted min-h-6 w-6 rounded-full',
-          'origin-center transition-colors duration-250 ease-linear',
-          'data-[lk-highlighted=true]:bg-foreground data-[lk-muted=true]:bg-muted',
+          "bg-muted min-h-6 w-6 rounded-full",
+          "origin-center transition-colors duration-250 ease-linear",
+          "data-[lk-highlighted=true]:bg-foreground data-[lk-muted=true]:bg-muted",
         ])}
       />
     </BarVisualizer>

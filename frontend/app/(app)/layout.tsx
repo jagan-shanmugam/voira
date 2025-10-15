@@ -1,5 +1,5 @@
-import { Header } from '@/components/header';
-import { RootLayout } from '@/components/root-layout';
+import { Header } from "@/components/header";
+import { RootLayout } from "@/components/root-layout";
 
 interface RootLayoutProps {
   children: React.ReactNode;

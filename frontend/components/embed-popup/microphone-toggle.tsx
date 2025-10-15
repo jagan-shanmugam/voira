@@ -1,12 +1,12 @@
-import { Track } from 'livekit-client';
+import { Track } from "livekit-client";
 import {
   BarVisualizer,
   type TrackReferenceOrPlaceholder,
   useTrackToggle,
-} from '@livekit/components-react';
-import { DeviceSelect } from '@/components/livekit/device-select';
-import { TrackToggle } from '@/components/livekit/track-toggle';
-import { cn } from '@/lib/utils';
+} from "@livekit/components-react";
+import { DeviceSelect } from "@/components/livekit/device-select";
+import { TrackToggle } from "@/components/livekit/track-toggle";
+import { cn } from "@/lib/utils";
 
 interface MicrophoneToggleProps {
   micTrackRef: TrackReferenceOrPlaceholder;
@@ -37,9 +37,9 @@ export function MicrophoneToggle({
         >
           <span
             className={cn([
-              'h-full w-0.5 origin-center rounded-2xl',
-              'group-data-[state=on]/track:bg-fg1 group-data-[state=off]/track:bg-destructive-foreground',
-              'data-lk-muted:bg-muted',
+              "h-full w-0.5 origin-center rounded-2xl",
+              "group-data-[state=on]/track:bg-fg1 group-data-[state=off]/track:bg-destructive-foreground",
+              "data-lk-muted:bg-muted",
             ])}
           ></span>
         </BarVisualizer>
@@ -52,11 +52,11 @@ export function MicrophoneToggle({
         kind="audioinput"
         onActiveDeviceChange={handleAudioDeviceChange}
         className={cn([
-          'pl-2',
-          'peer-data-[state=off]/track:text-destructive-foreground',
-          'hover:text-fg1 focus:text-fg1',
-          'hover:peer-data-[state=off]/track:text-destructive-foreground focus:peer-data-[state=off]/track:text-destructive-foreground',
-          'hidden rounded-l-none md:block',
+          "pl-2",
+          "peer-data-[state=off]/track:text-destructive-foreground",
+          "hover:text-fg1 focus:text-fg1",
+          "hover:peer-data-[state=off]/track:text-destructive-foreground focus:peer-data-[state=off]/track:text-destructive-foreground",
+          "hidden rounded-l-none md:block",
         ])}
       />
     </div>

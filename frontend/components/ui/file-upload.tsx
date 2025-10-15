@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useRef, useState } from 'react';
-import { FileTextIcon, UploadIcon, XIcon } from '@phosphor-icons/react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { useRef, useState } from "react";
+import { FileTextIcon, UploadIcon, XIcon } from "@phosphor-icons/react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface FileUploadProps {
   onFilesSelected: (files: File[]) => void;
@@ -14,7 +14,7 @@ interface FileUploadProps {
 
 export function FileUpload({
   onFilesSelected,
-  accept = '.txt,.md,.pdf,.docx',
+  accept = ".txt,.md,.pdf,.docx",
   multiple = true,
   maxSize = 10,
 }: FileUploadProps) {
@@ -24,9 +24,9 @@ export function FileUpload({
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
+    if (e.type === "dragenter" || e.type === "dragover") {
       setDragActive(true);
-    } else if (e.type === 'dragleave') {
+    } else if (e.type === "dragleave") {
       setDragActive(false);
     }
   };
@@ -69,8 +69,8 @@ export function FileUpload({
     <div className="w-full">
       <div
         className={cn(
-          'rounded-lg border-2 border-dashed p-8 text-center transition-colors',
-          dragActive ? 'border-primary bg-primary/10' : 'border-separator2 hover:border-primary/50'
+          "rounded-lg border-2 border-dashed p-8 text-center transition-colors",
+          dragActive ? "border-primary bg-primary/10" : "border-separator2 hover:border-primary/50"
         )}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
@@ -100,11 +100,11 @@ export function FileUpload({
                 className="h-auto p-0"
               >
                 Click to upload
-              </Button>{' '}
+              </Button>{" "}
               or drag and drop
             </p>
             <p className="text-fg3 text-sm">
-              {accept.split(',').join(', ')} (max {maxSize}MB)
+              {accept.split(",").join(", ")} (max {maxSize}MB)
             </p>
           </div>
         </div>

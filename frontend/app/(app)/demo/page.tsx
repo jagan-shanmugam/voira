@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { CalendarIcon, PhoneIcon, UserCircleIcon } from '@phosphor-icons/react';
-import { AgentCard } from '@/components/demo/agent-card';
-import { PhoneInput } from '@/components/demo/phone-input';
-import { VoiceInterface } from '@/components/demo/voice-interface';
-import { ApplyThemeScript } from '@/components/theme-toggle';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import Link from "next/link";
+import { CalendarIcon, PhoneIcon, UserCircleIcon } from "@phosphor-icons/react";
+import { AgentCard } from "@/components/demo/agent-card";
+import { PhoneInput } from "@/components/demo/phone-input";
+import { VoiceInterface } from "@/components/demo/voice-interface";
+import { ApplyThemeScript } from "@/components/theme-toggle";
+import { Button } from "@/components/ui/button";
 
 export default function DemoPage() {
   const [activeAgent, setActiveAgent] = useState<string | null>(null);
@@ -41,7 +41,7 @@ export default function DemoPage() {
             badge="Inbound"
             badgeVariant="default"
           >
-            <Button onClick={() => startCall('Calendar Agent')} className="w-full" size="lg">
+            <Button onClick={() => startCall("Calendar Agent")} className="w-full" size="lg">
               Start Call
             </Button>
           </AgentCard>
@@ -65,7 +65,7 @@ export default function DemoPage() {
             badge="Inbound + Avatar"
             badgeVariant="outline"
           >
-            <Button onClick={() => startCall('Avatar Agent')} className="w-full" size="lg">
+            <Button onClick={() => startCall("Avatar Agent")} className="w-full" size="lg">
               Start Call with Avatar
             </Button>
           </AgentCard>

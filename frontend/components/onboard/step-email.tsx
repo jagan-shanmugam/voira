@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { SuccessMessage } from '@/components/ui/success-message';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { SuccessMessage } from "@/components/ui/success-message";
 
 interface StepEmailProps {
   onComplete: (data?: { provider: string }) => void;
@@ -11,16 +11,16 @@ interface StepEmailProps {
 
 const emailProviders = [
   {
-    id: 'gmail',
-    name: 'Gmail',
-    description: 'Connect your Gmail account',
-    icon: '📧',
+    id: "gmail",
+    name: "Gmail",
+    description: "Connect your Gmail account",
+    icon: "📧",
   },
   {
-    id: 'outlook',
-    name: 'Microsoft Outlook',
-    description: 'Connect to your Outlook email',
-    icon: '📬',
+    id: "outlook",
+    name: "Microsoft Outlook",
+    description: "Connect to your Outlook email",
+    icon: "📬",
   },
 ];
 
@@ -68,7 +68,7 @@ export function StepEmail({ onComplete }: StepEmailProps) {
           {emailProviders.map((provider) => (
             <Card
               key={provider.id}
-              className={`p-4 ${connected === provider.id ? 'border-primary' : ''}`}
+              className={`p-4 ${connected === provider.id ? "border-primary" : ""}`}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -88,7 +88,7 @@ export function StepEmail({ onComplete }: StepEmailProps) {
                     disabled={!!connecting || !!connected}
                     variant="outline"
                   >
-                    {connecting === provider.id ? 'Connecting...' : 'Connect'}
+                    {connecting === provider.id ? "Connecting..." : "Connect"}
                   </Button>
                 )}
               </div>
@@ -104,7 +104,7 @@ export function StepEmail({ onComplete }: StepEmailProps) {
         <Button
           onClick={handleComplete}
           disabled={!connected || !!connecting}
-          variant={connected ? 'primary' : undefined}
+          variant={connected ? "primary" : undefined}
         >
           Complete Setup
         </Button>

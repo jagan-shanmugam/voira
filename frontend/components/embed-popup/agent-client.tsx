@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Room, RoomEvent } from 'livekit-client';
-import { motion } from 'motion/react';
-import { RoomAudioRenderer, RoomContext, StartAudio } from '@livekit/components-react';
-import { ErrorMessage } from '@/components/embed-popup/error-message';
-import { PopupView } from '@/components/embed-popup/popup-view';
-import { Trigger } from '@/components/embed-popup/trigger';
-import useConnectionDetails from '@/hooks/use-connection-details';
-import { type AppConfig, EmbedErrorDetails } from '@/lib/types';
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Room, RoomEvent } from "livekit-client";
+import { motion } from "motion/react";
+import { RoomAudioRenderer, RoomContext, StartAudio } from "@livekit/components-react";
+import { ErrorMessage } from "@/components/embed-popup/error-message";
+import { PopupView } from "@/components/embed-popup/popup-view";
+import { Trigger } from "@/components/embed-popup/trigger";
+import useConnectionDetails from "@/hooks/use-connection-details";
+import { type AppConfig, EmbedErrorDetails } from "@/lib/types";
 
 const PopupViewMotion = motion.create(PopupView);
 
@@ -40,7 +40,7 @@ function AgentClient({ appConfig }: EmbedFixedAgentClientProps) {
 
   const handlePanelAnimationComplete = () => {
     isAnimating.current = false;
-    if (!popupOpen && room.state !== 'disconnected') {
+    if (!popupOpen && room.state !== "disconnected") {
       room.disconnect();
     }
   };
@@ -52,7 +52,7 @@ function AgentClient({ appConfig }: EmbedFixedAgentClientProps) {
     };
     const onMediaDevicesError = (error: Error) => {
       setError({
-        title: 'Encountered an error with your media devices',
+        title: "Encountered an error with your media devices",
         description: `${error.name}: ${error.message}`,
       });
     };
@@ -70,12 +70,12 @@ function AgentClient({ appConfig }: EmbedFixedAgentClientProps) {
     }
     if (!connectionDetails) {
       setError({
-        title: 'Error fetching connection details',
-        description: 'Please try again later',
+        title: "Error fetching connection details",
+        description: "Please try again later",
       });
       return;
     }
-    if (room.state !== 'disconnected') {
+    if (room.state !== "disconnected") {
       return;
     }
 
@@ -89,9 +89,9 @@ function AgentClient({ appConfig }: EmbedFixedAgentClientProps) {
         ),
       ]).catch((error) => {
         if (error instanceof Error) {
-          console.error('Error connecting to agent:', error);
+          console.error("Error connecting to agent:", error);
           setError({
-            title: 'There was an error connecting to the agent',
+            title: "There was an error connecting to the agent",
             description: `${error.name}: ${error.message}`,
           });
         }
@@ -125,7 +125,7 @@ function AgentClient({ appConfig }: EmbedFixedAgentClientProps) {
           translateY: popupOpen ? 0 : 8,
         }}
         transition={{
-          type: 'spring',
+          type: "spring",
           bounce: 0,
           duration: popupOpen ? 1 : 0.2,
         }}
@@ -142,7 +142,7 @@ function AgentClient({ appConfig }: EmbedFixedAgentClientProps) {
                 initial={{ opacity: 1 }}
                 animate={{ opacity: error === null ? 1 : 0 }}
                 transition={{
-                  type: 'linear',
+                  type: "linear",
                   duration: 0.2,
                 }}
                 disabled={!popupOpen}

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { FileList, FileUpload } from '@/components/ui/file-upload';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
-import { SuccessMessage } from '@/components/ui/success-message';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { FileList, FileUpload } from "@/components/ui/file-upload";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { SuccessMessage } from "@/components/ui/success-message";
 
 interface StepKnowledgeProps {
   tenantId: string;
@@ -15,7 +15,7 @@ export function StepKnowledge({ tenantId, onNext }: StepKnowledgeProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleFilesSelected = (newFiles: File[]) => {
     setFiles((prev) => [...prev, ...newFiles]);
@@ -30,7 +30,7 @@ export function StepKnowledge({ tenantId, onNext }: StepKnowledgeProps) {
     if (files.length === 0) return;
 
     setUploading(true);
-    setError('');
+    setError("");
 
     try {
       // Read file contents
@@ -45,20 +45,20 @@ export function StepKnowledge({ tenantId, onNext }: StepKnowledgeProps) {
         })
       );
 
-      const response = await fetch('/api/ingest', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/ingest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ tenantId, documents }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to upload documents');
+        throw new Error("Failed to upload documents");
       }
 
       setUploadSuccess(true);
       setFiles([]);
     } catch (err) {
-      setError('Failed to upload documents. Please try again.');
+      setError("Failed to upload documents. Please try again.");
       console.error(err);
     } finally {
       setUploading(false);
@@ -80,7 +80,7 @@ export function StepKnowledge({ tenantId, onNext }: StepKnowledgeProps) {
             <div className="flex items-center justify-between">
               <p className="text-fg1 text-sm">{files.length} file(s) selected</p>
               <Button onClick={handleUpload} disabled={uploading} size="sm" variant="outline">
-                {uploading ? <LoadingSpinner size="sm" /> : 'Upload Files'}
+                {uploading ? <LoadingSpinner size="sm" /> : "Upload Files"}
               </Button>
             </div>
             <FileList files={files} onRemove={handleRemoveFile} />
@@ -97,9 +97,9 @@ export function StepKnowledge({ tenantId, onNext }: StepKnowledgeProps) {
         <Button
           onClick={onNext}
           disabled={!canContinue || uploading}
-          variant={canContinue ? 'primary' : undefined}
+          variant={canContinue ? "primary" : undefined}
         >
-          {files.length > 0 && !uploadSuccess ? 'Skip for Now' : 'Continue'}
+          {files.length > 0 && !uploadSuccess ? "Skip for Now" : "Continue"}
         </Button>
       </div>
     </div>

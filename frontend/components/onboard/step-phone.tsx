@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
-import { SuccessMessage } from '@/components/ui/success-message';
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { SuccessMessage } from "@/components/ui/success-message";
 
 interface StepPhoneProps {
   onNext: (data: { inboundNumber: string; outboundNumber: string }) => void;
@@ -16,21 +16,21 @@ export function StepPhone({ onNext }: StepPhoneProps) {
     inboundNumber: string;
     outboundNumber: string;
   } | null>(null);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleAllocate = async () => {
     setAllocating(true);
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('/api/allocate-phone', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ country: 'US' }),
+      const response = await fetch("/api/allocate-phone", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ country: "US" }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to allocate phone numbers');
+        throw new Error("Failed to allocate phone numbers");
       }
 
       const result = await response.json();
@@ -39,7 +39,7 @@ export function StepPhone({ onNext }: StepPhoneProps) {
         outboundNumber: result.outboundNumber,
       });
     } catch (err) {
-      setError('Failed to allocate phone numbers. Please try again.');
+      setError("Failed to allocate phone numbers. Please try again.");
       console.error(err);
     } finally {
       setAllocating(false);
@@ -98,7 +98,7 @@ export function StepPhone({ onNext }: StepPhoneProps) {
         <Button
           onClick={handleContinue}
           disabled={!phoneNumbers || allocating}
-          variant={phoneNumbers ? 'primary' : undefined}
+          variant={phoneNumbers ? "primary" : undefined}
         >
           Continue
         </Button>

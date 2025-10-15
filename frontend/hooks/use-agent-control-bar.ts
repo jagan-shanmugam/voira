@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { Track } from 'livekit-client';
+import * as React from "react";
+import { Track } from "livekit-client";
 import {
   type TrackReferenceOrPlaceholder,
   useLocalParticipant,
   usePersistentUserChoices,
   useRoomContext,
   useTrackToggle,
-} from '@livekit/components-react';
-import { usePublishPermissions } from './use-publish-permissions';
+} from "@livekit/components-react";
+import { usePublishPermissions } from "./use-publish-permissions";
 
 export interface ControlBarControls {
   microphone?: boolean;
@@ -91,14 +91,14 @@ export function useAgentControlBar({
 
   const handleAudioDeviceChange = React.useCallback(
     (deviceId: string) => {
-      saveAudioInputDeviceId(deviceId ?? 'default');
+      saveAudioInputDeviceId(deviceId ?? "default");
     },
     [saveAudioInputDeviceId]
   );
 
   const handleVideoDeviceChange = React.useCallback(
     (deviceId: string) => {
-      saveVideoInputDeviceId(deviceId ?? 'default');
+      saveVideoInputDeviceId(deviceId ?? "default");
     },
     [saveVideoInputDeviceId]
   );

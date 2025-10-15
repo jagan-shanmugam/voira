@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { StepCalendar } from '@/components/onboard/step-calendar';
-import { StepDetails } from '@/components/onboard/step-details';
-import { StepEmail } from '@/components/onboard/step-email';
-import { StepKnowledge } from '@/components/onboard/step-knowledge';
-import { StepPhone } from '@/components/onboard/step-phone';
-import { StepWebsite } from '@/components/onboard/step-website';
-import { WizardLayout } from '@/components/onboard/wizard-layout';
-import { ApplyThemeScript } from '@/components/theme-toggle';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { StepCalendar } from "@/components/onboard/step-calendar";
+import { StepDetails } from "@/components/onboard/step-details";
+import { StepEmail } from "@/components/onboard/step-email";
+import { StepKnowledge } from "@/components/onboard/step-knowledge";
+import { StepPhone } from "@/components/onboard/step-phone";
+import { StepWebsite } from "@/components/onboard/step-website";
+import { WizardLayout } from "@/components/onboard/wizard-layout";
+import { ApplyThemeScript } from "@/components/theme-toggle";
 
 interface ScrapedData {
   practiceName?: string;
@@ -44,7 +44,7 @@ interface OnboardingData {
   };
 }
 
-const STORAGE_KEY = 'voira_onboarding_data';
+const STORAGE_KEY = "voira_onboarding_data";
 const TOTAL_STEPS = 6;
 
 export default function OnboardPage() {
@@ -61,7 +61,7 @@ export default function OnboardPage() {
         setData(parsed.data || {});
         setCurrentStep(parsed.step || 1);
       } catch (e) {
-        console.error('Failed to parse saved data', e);
+        console.error("Failed to parse saved data", e);
       }
     }
   }, []);
@@ -109,51 +109,51 @@ export default function OnboardPage() {
     setData({ ...data, email: stepData });
     // Clear localStorage and redirect to success page
     localStorage.removeItem(STORAGE_KEY);
-    router.push('/onboard/success');
+    router.push("/onboard/success");
   };
 
   const getTenantId = () => {
     if (data.details?.practiceName) {
-      return data.details.practiceName.toLowerCase().replace(/[^a-z0-9]/g, '_');
+      return data.details.practiceName.toLowerCase().replace(/[^a-z0-9]/g, "_");
     }
-    return 'demo';
+    return "demo";
   };
 
   const getStepTitle = () => {
     switch (currentStep) {
       case 1:
-        return 'Website Information';
+        return "Website Information";
       case 2:
-        return 'Practice Details';
+        return "Practice Details";
       case 3:
-        return 'Knowledge Base';
+        return "Knowledge Base";
       case 4:
-        return 'Phone Configuration';
+        return "Phone Configuration";
       case 5:
-        return 'Calendar Integration';
+        return "Calendar Integration";
       case 6:
-        return 'Email Integration';
+        return "Email Integration";
       default:
-        return '';
+        return "";
     }
   };
 
   const getStepDescription = () => {
     switch (currentStep) {
       case 1:
-        return 'Enter your website URL to automatically extract your business information (optional).';
+        return "Enter your website URL to automatically extract your business information (optional).";
       case 2:
-        return 'Provide basic information about your practice.';
+        return "Provide basic information about your practice.";
       case 3:
-        return 'Upload documents to train your voice agent with your specific knowledge.';
+        return "Upload documents to train your voice agent with your specific knowledge.";
       case 4:
-        return 'Set up phone numbers for inbound and outbound voice agent calls.';
+        return "Set up phone numbers for inbound and outbound voice agent calls.";
       case 5:
-        return 'Connect your calendar system for appointment booking.';
+        return "Connect your calendar system for appointment booking.";
       case 6:
-        return 'Configure email for sending confirmations and notifications.';
+        return "Configure email for sending confirmations and notifications.";
       default:
-        return '';
+        return "";
     }
   };
 

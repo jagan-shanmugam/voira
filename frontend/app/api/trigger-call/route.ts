@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 // Simulated outbound call trigger
 export async function POST(req: Request) {
@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     const { phoneNumber, agentType } = body;
 
     if (!phoneNumber) {
-      return NextResponse.json({ error: 'Phone number is required' }, { status: 400 });
+      return NextResponse.json({ error: "Phone number is required" }, { status: 400 });
     }
 
     // Simulate API processing delay
@@ -17,14 +17,14 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
-      message: 'Call request queued successfully',
+      message: "Call request queued successfully",
       callId: `call_${Date.now()}`,
       phoneNumber,
-      agentType: agentType || 'claims',
-      estimatedCallTime: '30-60 seconds',
+      agentType: agentType || "claims",
+      estimatedCallTime: "30-60 seconds",
     });
   } catch (error) {
-    console.error('Error triggering call:', error);
-    return NextResponse.json({ error: 'Failed to trigger call' }, { status: 500 });
+    console.error("Error triggering call:", error);
+    return NextResponse.json({ error: "Failed to trigger call" }, { status: 500 });
   }
 }

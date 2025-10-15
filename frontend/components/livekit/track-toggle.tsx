@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Track } from 'livekit-client';
-import { useTrackToggle } from '@livekit/components-react';
+import * as React from "react";
+import { Track } from "livekit-client";
+import { useTrackToggle } from "@livekit/components-react";
 import {
   MicrophoneIcon,
   MicrophoneSlashIcon,
@@ -10,12 +10,12 @@ import {
   SpinnerIcon,
   VideoCameraIcon,
   VideoCameraSlashIcon,
-} from '@phosphor-icons/react/dist/ssr';
-import { Toggle } from '@/components/ui/toggle';
-import { cn } from '@/lib/utils';
+} from "@phosphor-icons/react/dist/ssr";
+import { Toggle } from "@/components/ui/toggle";
+import { cn } from "@/lib/utils";
 
 export type TrackToggleProps = React.ComponentProps<typeof Toggle> & {
-  source: Parameters<typeof useTrackToggle>[0]['source'];
+  source: Parameters<typeof useTrackToggle>[0]["source"];
   pending?: boolean;
 };
 
@@ -41,7 +41,7 @@ export function TrackToggle({ source, pressed, pending, className, ...props }: T
 
   return (
     <Toggle pressed={pressed} aria-label={`Toggle ${source}`} className={cn(className)} {...props}>
-      <IconComponent weight="bold" className={cn(pending && 'animate-spin')} />
+      <IconComponent weight="bold" className={cn(pending && "animate-spin")} />
       {props.children}
     </Toggle>
   );

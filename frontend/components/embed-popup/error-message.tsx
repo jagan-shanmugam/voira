@@ -1,5 +1,5 @@
-import { EmbedErrorDetails } from '@/lib/types';
-import { cn } from '@/lib/utils';
+import { EmbedErrorDetails } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 interface ErrorMessageProps {
   error: EmbedErrorDetails | null;
@@ -10,8 +10,8 @@ export function ErrorMessage({ error }: ErrorMessageProps) {
     <div
       inert={error === null}
       className={cn(
-        'absolute inset-0 z-50 flex h-full w-full flex-col items-center justify-center gap-5 transition-opacity',
-        error === null ? 'opacity-0' : 'opacity-100'
+        "absolute inset-0 z-50 flex h-full w-full flex-col items-center justify-center gap-5 transition-opacity",
+        error === null ? "opacity-0" : "opacity-100"
       )}
     >
       <div className="pl-3" />

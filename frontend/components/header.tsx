@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { List, X } from '@phosphor-icons/react';
-import { cn } from '@/lib/utils';
-import { ThemeToggle } from './theme-toggle';
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { List, X } from "@phosphor-icons/react";
+import { cn } from "@/lib/utils";
+import { ThemeToggle } from "./theme-toggle";
 
 export function Header() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { href: '/', label: 'Home' },
-    { href: '/demo', label: 'Demo' },
-    { href: '/onboard', label: 'Onboard' },
+    { href: "/", label: "Home" },
+    { href: "/demo", label: "Demo" },
+    { href: "/onboard", label: "Onboard" },
   ];
 
   const toggleMobileMenu = () => {
@@ -43,14 +43,14 @@ export function Header() {
           <nav className="hidden items-center gap-1 md:flex">
             {navItems.map((item) => {
               const isActive =
-                pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+                pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'text-fg2 hover:text-fg0 hover:bg-bg2 rounded-lg px-4 py-2 text-sm font-medium transition-colors',
-                    isActive && 'text-fg0 bg-bg2'
+                    "text-fg2 hover:text-fg0 hover:bg-bg2 rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+                    isActive && "text-fg0 bg-bg2"
                   )}
                 >
                   {item.label}
@@ -79,15 +79,15 @@ export function Header() {
           <nav className="border-separator1 border-t py-4 md:hidden">
             {navItems.map((item) => {
               const isActive =
-                pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+                pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={cn(
-                    'text-fg2 hover:text-fg0 hover:bg-bg2 block rounded-lg px-4 py-3 text-base font-medium transition-colors',
-                    isActive && 'text-fg0 bg-bg2'
+                    "text-fg2 hover:text-fg0 hover:bg-bg2 block rounded-lg px-4 py-3 text-base font-medium transition-colors",
+                    isActive && "text-fg0 bg-bg2"
                   )}
                 >
                   {item.label}

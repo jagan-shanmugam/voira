@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Rubik_Mono_One } from 'next/font/google';
-import { APP_CONFIG_DEFAULTS } from '@/app-config';
-import EmbedPopupAgentClient from './embed-popup/agent-client';
+import { Rubik_Mono_One } from "next/font/google";
+import { APP_CONFIG_DEFAULTS } from "@/app-config";
+import EmbedPopupAgentClient from "./embed-popup/agent-client";
 
-const quirky = Rubik_Mono_One({ weight: '400', subsets: ['latin'] });
+const quirky = Rubik_Mono_One({ weight: "400", subsets: ["latin"] });
 
 export default function Welcome() {
   return (
@@ -13,7 +13,7 @@ export default function Welcome() {
         <h1
           className={`${quirky.className} max-w-[90vw] text-center text-[8vw] leading-[0.9] tracking-tight md:text-[7vw] lg:text-[6vw]`}
         >
-          Customer Experience of Your <span className="underline underline-offset-8">Business</span>{' '}
+          Customer Experience of Your <span className="underline underline-offset-8">Business</span>{" "}
           should be in <span className="underline underline-offset-8">2025</span>
         </h1>
       </div>

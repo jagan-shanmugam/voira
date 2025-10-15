@@ -1,7 +1,7 @@
-import * as React from 'react';
-import type { MessageFormatter, ReceivedChatMessage } from '@livekit/components-react';
-import { cn } from '@/lib/utils';
-import { useChatMessage } from './hooks/utils';
+import * as React from "react";
+import type { MessageFormatter, ReceivedChatMessage } from "@livekit/components-react";
+import { cn } from "@/lib/utils";
+import { useChatMessage } from "./hooks/utils";
 
 export interface ChatEntryProps extends React.HTMLAttributes<HTMLLIElement> {
   /** The chat massage object to display. */
@@ -22,18 +22,18 @@ export const ChatEntry = ({
   className,
   ref,
   ...props
-}: React.ComponentProps<'li'> & ChatEntryProps) => {
+}: React.ComponentProps<"li"> & ChatEntryProps) => {
   const { message, hasBeenEdited, time, locale, name } = useChatMessage(entry, messageFormatter);
 
   const isUser = entry.from?.isLocal ?? false;
-  const messageOrigin = isUser ? 'remote' : 'local';
+  const messageOrigin = isUser ? "remote" : "local";
 
   return (
     <li
       ref={ref}
       data-lk-message-origin={messageOrigin}
-      title={time.toLocaleTimeString(locale, { timeStyle: 'full' })}
-      className={cn('group flex flex-col gap-0.5', className)}
+      title={time.toLocaleTimeString(locale, { timeStyle: "full" })}
+      className={cn("group flex flex-col gap-0.5", className)}
       {...props}
     >
       {(!hideTimestamp || !hideName || hasBeenEdited) && (
@@ -42,8 +42,8 @@ export const ChatEntry = ({
 
           {!hideTimestamp && (
             <span className="align-self-end ml-auto font-mono text-xs opacity-0 transition-opacity ease-linear group-hover:opacity-100">
-              {hasBeenEdited && '*'}
-              {time.toLocaleTimeString(locale, { timeStyle: 'short' })}
+              {hasBeenEdited && "*"}
+              {time.toLocaleTimeString(locale, { timeStyle: "short" })}
             </span>
           )}
         </span>
@@ -51,8 +51,8 @@ export const ChatEntry = ({
 
       <span
         className={cn(
-          'max-w-4/5 rounded-[20px] p-2 text-sm',
-          isUser ? 'bg-bg3 ml-auto' : 'mr-auto'
+          "max-w-4/5 rounded-[20px] p-2 text-sm",
+          isUser ? "bg-bg3 ml-auto" : "mr-auto"
         )}
       >
         {message}

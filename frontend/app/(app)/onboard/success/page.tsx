@@ -1,8 +1,8 @@
-import Link from 'next/link';
-import { CheckCircleIcon, RocketLaunchIcon } from '@phosphor-icons/react/dist/ssr';
-import { ApplyThemeScript } from '@/components/theme-toggle';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import Link from "next/link";
+import { CheckCircleIcon, RocketLaunchIcon } from "@phosphor-icons/react/dist/ssr";
+import { ApplyThemeScript } from "@/components/theme-toggle";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 export default function OnboardSuccessPage() {
   return (

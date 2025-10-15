@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { type ReactNode } from 'react';
-import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
+import { type ReactNode } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 
 interface AgentCardProps {
   icon: ReactNode;
   title: string;
   description: string;
   badge?: string;
-  badgeVariant?: 'default' | 'secondary' | 'destructive' | 'outline';
+  badgeVariant?: "default" | "secondary" | "destructive" | "outline";
   children: ReactNode;
 }
 
@@ -18,7 +18,7 @@ export function AgentCard({
   title,
   description,
   badge,
-  badgeVariant = 'default',
+  badgeVariant = "default",
   children,
 }: AgentCardProps) {
   return (

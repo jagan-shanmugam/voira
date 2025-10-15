@@ -1,4 +1,4 @@
-import { THEME_MEDIA_QUERY } from '@/lib/env';
+import { THEME_MEDIA_QUERY } from "@/lib/env";
 
 const THEME_SCRIPT = `
   const doc = document.documentElement;
@@ -15,8 +15,8 @@ const THEME_SCRIPT = `
   }
 `
   .trim()
-  .replace(/\n/g, '')
-  .replace(/\s+/g, ' ');
+  .replace(/\n/g, "")
+  .replace(/\s+/g, " ");
 
 export function ApplyThemeScript() {
   return <script id="theme-script">{THEME_SCRIPT}</script>;

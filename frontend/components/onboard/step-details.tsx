@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 
 interface StepDetailsProps {
   initialData?: {
@@ -21,15 +21,15 @@ interface StepDetailsProps {
 }
 
 export function StepDetails({ initialData, onNext }: StepDetailsProps) {
-  const [practiceName, setPracticeName] = useState(initialData?.practiceName || '');
-  const [businessType, setBusinessType] = useState(initialData?.businessType || '');
-  const [location, setLocation] = useState(initialData?.location || '');
+  const [practiceName, setPracticeName] = useState(initialData?.practiceName || "");
+  const [businessType, setBusinessType] = useState(initialData?.businessType || "");
+  const [location, setLocation] = useState(initialData?.location || "");
 
   useEffect(() => {
     if (initialData) {
-      setPracticeName(initialData.practiceName || '');
-      setBusinessType(initialData.businessType || '');
-      setLocation(initialData.location || '');
+      setPracticeName(initialData.practiceName || "");
+      setBusinessType(initialData.businessType || "");
+      setLocation(initialData.location || "");
     }
   }, [initialData]);
 
@@ -92,7 +92,7 @@ export function StepDetails({ initialData, onNext }: StepDetailsProps) {
       </div>
 
       <div className="flex justify-end pt-4">
-        <Button type="submit" disabled={!isValid} variant={isValid ? 'primary' : undefined}>
+        <Button type="submit" disabled={!isValid} variant={isValid ? "primary" : undefined}>
           Continue
         </Button>
       </div>

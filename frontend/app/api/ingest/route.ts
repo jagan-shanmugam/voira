@@ -1,7 +1,7 @@
 // POST /api/ingest
 // Ingest documents into Weaviate Cloud with tenant-specific collections
-import { NextRequest, NextResponse } from 'next/server';
-import weaviate, { WeaviateClient, configure } from 'weaviate-client';
+import { NextRequest, NextResponse } from "next/server";
+import weaviate, { WeaviateClient, configure } from "weaviate-client";
 
 // TODO: Future enhancement - Support additional document types (.pdf, .docx, .csv)
 // Currently supports: .txt, .md files only
@@ -22,7 +22,7 @@ interface IngestRequest {
  * Currently only supports .txt and .md files
  */
 function isValidFileType(filename: string): boolean {
-  const validExtensions = ['.txt', '.md'];
+  const validExtensions = [".txt", ".md"];
   return validExtensions.some((ext) => filename.toLowerCase().endsWith(ext));
 }
 
@@ -41,28 +41,28 @@ async function ensureCollection(client: WeaviateClient, tenantId: string): Promi
       await client.collections.create({
         name: collectionName,
         vectorizers: configure.vectorizer.text2VecOpenAI({
-          model: 'text-embedding-3-small',
+          model: "text-embedding-3-small",
         }),
         properties: [
           {
-            name: 'content',
-            dataType: 'text',
-            description: 'Document content',
+            name: "content",
+            dataType: "text",
+            description: "Document content",
           },
           {
-            name: 'title',
-            dataType: 'text',
-            description: 'Document title or heading',
+            name: "title",
+            dataType: "text",
+            description: "Document title or heading",
           },
           {
-            name: 'filename',
-            dataType: 'text',
-            description: 'Original filename',
+            name: "filename",
+            dataType: "text",
+            description: "Original filename",
           },
           {
-            name: 'metadata',
-            dataType: 'text',
-            description: 'Additional metadata as JSON string',
+            name: "metadata",
+            dataType: "text",
+            description: "Additional metadata as JSON string",
           },
         ],
       });
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
     if (!tenantId || !documents || !Array.isArray(documents)) {
       return NextResponse.json(
         {
-          error: 'Invalid request. Required: tenantId (string) and documents (array)',
+          error: "Invalid request. Required: tenantId (string) and documents (array)",
         },
         { status: 400 }
       );
@@ -96,9 +96,9 @@ export async function POST(request: NextRequest) {
 
     // Validate environment variables
     if (!process.env.WEAVIATE_URL || !process.env.WEAVIATE_API_KEY || !process.env.OPENAI_API_KEY) {
-      console.error('Missing required environment variables');
+      console.error("Missing required environment variables");
       return NextResponse.json(
-        { error: 'Server configuration error. Please contact administrator.' },
+        { error: "Server configuration error. Please contact administrator." },
         { status: 500 }
       );
     }
@@ -115,7 +115,7 @@ export async function POST(request: NextRequest) {
     if (validDocuments.length === 0) {
       return NextResponse.json(
         {
-          error: 'No valid documents to ingest. Only .txt and .md files are supported.',
+          error: "No valid documents to ingest. Only .txt and .md files are supported.",
         },
         { status: 400 }
       );
@@ -125,7 +125,7 @@ export async function POST(request: NextRequest) {
     client = await weaviate.connectToWeaviateCloud(process.env.WEAVIATE_URL, {
       authCredentials: new weaviate.ApiKey(process.env.WEAVIATE_API_KEY),
       headers: {
-        'X-OpenAI-Api-Key': process.env.OPENAI_API_KEY,
+        "X-OpenAI-Api-Key": process.env.OPENAI_API_KEY,
       },
     });
 
@@ -138,7 +138,7 @@ export async function POST(request: NextRequest) {
     // Prepare documents for insertion
     const dataObjects = validDocuments.map((doc) => ({
       content: doc.content,
-      title: doc.filename.replace(/\.(txt|md)$/i, ''), // Remove extension for title
+      title: doc.filename.replace(/\.(txt|md)$/i, ""), // Remove extension for title
       filename: doc.filename,
       metadata: doc.metadata || JSON.stringify({ uploadedAt: new Date().toISOString() }),
     }));
@@ -151,11 +151,11 @@ export async function POST(request: NextRequest) {
     const hasErrors = Object.keys(errors).length > 0;
 
     if (hasErrors) {
-      console.error('Insertion errors:', errors);
+      console.error("Insertion errors:", errors);
       return NextResponse.json(
         {
           success: true,
-          message: 'Documents ingested with some errors',
+          message: "Documents ingested with some errors",
           inserted: validDocuments.length - Object.keys(errors).length,
           total: validDocuments.length,
           errors: errors,
@@ -168,7 +168,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        message: 'Documents ingested successfully',
+        message: "Documents ingested successfully",
         inserted: validDocuments.length,
         skipped: documents.length - validDocuments.length,
         collectionName: collectionName,
@@ -176,11 +176,11 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error ingesting documents:', error);
+    console.error("Error ingesting documents:", error);
     return NextResponse.json(
       {
-        error: 'Failed to ingest documents',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: "Failed to ingest documents",
+        details: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );
@@ -190,7 +190,7 @@ export async function POST(request: NextRequest) {
       try {
         await client.close();
       } catch (closeError) {
-        console.error('Error closing client:', closeError);
+        console.error("Error closing client:", closeError);
       }
     }
   }

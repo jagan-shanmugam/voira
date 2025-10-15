@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { SuccessMessage } from '@/components/ui/success-message';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { SuccessMessage } from "@/components/ui/success-message";
 
 interface StepCalendarProps {
   onNext: (data?: { provider: string }) => void;
@@ -11,22 +11,22 @@ interface StepCalendarProps {
 
 const calendarProviders = [
   {
-    id: 'google',
-    name: 'Google Calendar',
-    description: 'Connect your Google Calendar account',
-    icon: '🗓️',
+    id: "google",
+    name: "Google Calendar",
+    description: "Connect your Google Calendar account",
+    icon: "🗓️",
   },
   {
-    id: 'calendly',
-    name: 'Calendly',
-    description: 'Integrate with your Calendly account',
-    icon: '📅',
+    id: "calendly",
+    name: "Calendly",
+    description: "Integrate with your Calendly account",
+    icon: "📅",
   },
   {
-    id: 'outlook',
-    name: 'Microsoft Outlook',
-    description: 'Connect to your Outlook calendar',
-    icon: '📆',
+    id: "outlook",
+    name: "Microsoft Outlook",
+    description: "Connect to your Outlook calendar",
+    icon: "📆",
   },
 ];
 
@@ -74,7 +74,7 @@ export function StepCalendar({ onNext }: StepCalendarProps) {
           {calendarProviders.map((provider) => (
             <Card
               key={provider.id}
-              className={`p-4 ${connected === provider.id ? 'border-primary' : ''}`}
+              className={`p-4 ${connected === provider.id ? "border-primary" : ""}`}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -94,7 +94,7 @@ export function StepCalendar({ onNext }: StepCalendarProps) {
                     disabled={!!connecting || !!connected}
                     variant="outline"
                   >
-                    {connecting === provider.id ? 'Connecting...' : 'Connect'}
+                    {connecting === provider.id ? "Connecting..." : "Connect"}
                   </Button>
                 )}
               </div>
@@ -110,7 +110,7 @@ export function StepCalendar({ onNext }: StepCalendarProps) {
         <Button
           onClick={handleContinue}
           disabled={!connected || !!connecting}
-          variant={connected ? 'primary' : undefined}
+          variant={connected ? "primary" : undefined}
         >
           Continue
         </Button>

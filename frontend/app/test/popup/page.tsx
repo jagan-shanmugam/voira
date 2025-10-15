@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Script from 'next/script';
-import { getSandboxId } from '@/lib/env';
-import './styles.css';
+import { useEffect, useState } from "react";
+import Script from "next/script";
+import { getSandboxId } from "@/lib/env";
+import "./styles.css";
 
 const CODE_SNIPPET = `
 function toggleTheme() {
@@ -16,7 +16,7 @@ function toggleTheme() {
 `.trim();
 
 export default function Page() {
-  const [sandboxId, setSandboxId] = useState('');
+  const [sandboxId, setSandboxId] = useState("");
 
   useEffect(() => {
     setSandboxId(getSandboxId(window.location.origin));
@@ -24,12 +24,12 @@ export default function Page() {
 
   function handleToggleTheme() {
     const doc = document.documentElement;
-    const popupWrapper = document.querySelector('#lk-embed-wrapper');
+    const popupWrapper = document.querySelector("#lk-embed-wrapper");
 
-    doc.classList.toggle('page-dark');
+    doc.classList.toggle("page-dark");
 
     if (popupWrapper) {
-      popupWrapper.classList.toggle('dark');
+      popupWrapper.classList.toggle("dark");
     }
   }
 

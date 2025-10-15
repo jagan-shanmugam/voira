@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { type ReactNode } from 'react';
-import { ArrowLeftIcon } from '@phosphor-icons/react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
+import { type ReactNode } from "react";
+import { ArrowLeftIcon } from "@phosphor-icons/react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 
 interface WizardLayoutProps {
   currentStep: number;

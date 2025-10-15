@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { useCallback } from 'react';
-import { Track } from 'livekit-client';
-import { BarVisualizer, useRemoteParticipants } from '@livekit/components-react';
-import { ChatTextIcon } from '@phosphor-icons/react/dist/ssr';
-import { ChatInput } from '@/components/livekit/chat/chat-input';
-import { DeviceSelect } from '@/components/livekit/device-select';
-import { TrackToggle } from '@/components/livekit/track-toggle';
-import { Toggle } from '@/components/ui/toggle';
-import { UseAgentControlBarProps, useAgentControlBar } from '@/hooks/use-agent-control-bar';
-import { AppConfig } from '@/lib/types';
-import { cn } from '@/lib/utils';
+import * as React from "react";
+import { useCallback } from "react";
+import { Track } from "livekit-client";
+import { BarVisualizer, useRemoteParticipants } from "@livekit/components-react";
+import { ChatTextIcon } from "@phosphor-icons/react/dist/ssr";
+import { ChatInput } from "@/components/livekit/chat/chat-input";
+import { DeviceSelect } from "@/components/livekit/device-select";
+import { TrackToggle } from "@/components/livekit/track-toggle";
+import { Toggle } from "@/components/ui/toggle";
+import { UseAgentControlBarProps, useAgentControlBar } from "@/hooks/use-agent-control-bar";
+import { AppConfig } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 export interface AgentControlBarProps
   extends React.HTMLAttributes<HTMLDivElement>,
     UseAgentControlBarProps {
-  capabilities: Pick<AppConfig, 'supportsChatInput' | 'supportsVideoInput' | 'supportsScreenShare'>;
+  capabilities: Pick<AppConfig, "supportsChatInput" | "supportsVideoInput" | "supportsScreenShare">;
   onChatOpenChange?: (open: boolean) => void;
   onSendMessage?: (message: string) => Promise<void>;
   onDeviceError?: (error: { source: Track.Source; error: Error }) => void;
@@ -85,7 +85,7 @@ export function ActionBar({
     <div
       aria-label="Voice assistant controls"
       className={cn(
-        'bg-background border-separator1 dark:border-separator1 relative z-20 mx-2 mb-2 flex flex-col rounded-[24px] border p-1 drop-shadow-md',
+        "bg-background border-separator1 dark:border-separator1 relative z-20 mx-2 mb-2 flex flex-col rounded-[24px] border p-1 drop-shadow-md",
         className
       )}
       {...props}
@@ -94,14 +94,14 @@ export function ActionBar({
         <div
           inert={!chatOpen}
           className={cn(
-            'relative overflow-hidden transition-[height] duration-300 ease-out',
-            chatOpen ? 'h-[46px]' : 'h-0'
+            "relative overflow-hidden transition-[height] duration-300 ease-out",
+            chatOpen ? "h-[46px]" : "h-0"
           )}
         >
           <div
             className={cn(
-              'absolute inset-x-0 top-0 flex h-9 w-full transition-opacity duration-150 ease-linear',
-              chatOpen ? 'opacity-100 delay-150' : 'opacity-0'
+              "absolute inset-x-0 top-0 flex h-9 w-full transition-opacity duration-150 ease-linear",
+              chatOpen ? "opacity-100 delay-150" : "opacity-0"
             )}
           >
             <ChatInput onSend={handleSendMessage} disabled={isInputDisabled} className="w-full" />
@@ -130,9 +130,9 @@ export function ActionBar({
                 >
                   <span
                     className={cn([
-                      'h-full w-0.5 origin-center rounded-2xl',
-                      'group-data-[state=on]/track:bg-fg1 group-data-[state=off]/track:bg-destructive-foreground',
-                      'data-lk-muted:bg-muted',
+                      "h-full w-0.5 origin-center rounded-2xl",
+                      "group-data-[state=on]/track:bg-fg1 group-data-[state=off]/track:bg-destructive-foreground",
+                      "data-lk-muted:bg-muted",
                     ])}
                   ></span>
                 </BarVisualizer>
@@ -144,11 +144,11 @@ export function ActionBar({
                 onMediaDeviceError={onMicrophoneDeviceSelectError}
                 onActiveDeviceChange={handleAudioDeviceChange}
                 className={cn([
-                  'pl-2',
-                  'peer-data-[state=off]/track:text-destructive-foreground',
-                  'hover:text-fg1 focus:text-fg1',
-                  'hover:peer-data-[state=off]/track:text-destructive-foreground focus:peer-data-[state=off]/track:text-destructive-foreground',
-                  'hidden rounded-l-none md:block',
+                  "pl-2",
+                  "peer-data-[state=off]/track:text-destructive-foreground",
+                  "hover:text-fg1 focus:text-fg1",
+                  "hover:peer-data-[state=off]/track:text-destructive-foreground focus:peer-data-[state=off]/track:text-destructive-foreground",
+                  "hidden rounded-l-none md:block",
                 ])}
               />
             </div>
@@ -172,11 +172,11 @@ export function ActionBar({
                 onMediaDeviceError={onCameraDeviceSelectError}
                 onActiveDeviceChange={handleVideoDeviceChange}
                 className={cn([
-                  'pl-2',
-                  'peer-data-[state=off]/track:text-destructive-foreground',
-                  'hover:text-fg1 focus:text-fg1',
-                  'hover:peer-data-[state=off]/track:text-destructive-foreground focus:peer-data-[state=off]/track:text-destructive-foreground',
-                  'rounded-l-none',
+                  "pl-2",
+                  "peer-data-[state=off]/track:text-destructive-foreground",
+                  "hover:text-fg1 focus:text-fg1",
+                  "hover:peer-data-[state=off]/track:text-destructive-foreground focus:peer-data-[state=off]/track:text-destructive-foreground",
+                  "rounded-l-none",
                 ])}
               />
             </div>

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useEffect, useMemo, useState } from 'react';
-import { Track } from 'livekit-client';
-import { AnimatePresence, motion } from 'motion/react';
+import React, { useEffect, useMemo, useState } from "react";
+import { Track } from "livekit-client";
+import { AnimatePresence, motion } from "motion/react";
 import {
   type AgentState,
   type TrackReference,
@@ -11,17 +11,17 @@ import {
   useRoomContext,
   useTracks,
   useVoiceAssistant,
-} from '@livekit/components-react';
-import { ActionBar } from '@/components/embed-popup/action-bar';
-import { AudioVisualizer } from '@/components/embed-popup/audio-visualizer';
-import { Transcript } from '@/components/embed-popup/transcript';
-import useChatAndTranscription from '@/hooks/use-chat-and-transcription';
-import { useDebugMode } from '@/hooks/useDebug';
-import type { AppConfig, EmbedErrorDetails } from '@/lib/types';
-import { cn } from '@/lib/utils';
+} from "@livekit/components-react";
+import { ActionBar } from "@/components/embed-popup/action-bar";
+import { AudioVisualizer } from "@/components/embed-popup/audio-visualizer";
+import { Transcript } from "@/components/embed-popup/transcript";
+import useChatAndTranscription from "@/hooks/use-chat-and-transcription";
+import { useDebugMode } from "@/hooks/useDebug";
+import type { AppConfig, EmbedErrorDetails } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 const TILE_TRANSITION = {
-  type: 'spring',
+  type: "spring",
   stiffness: 675,
   damping: 75,
   mass: 1,
@@ -40,7 +40,7 @@ export function useLocalTrackRef(source: Track.Source) {
 }
 
 function isAgentAvailable(agentState: AgentState) {
-  return agentState == 'listening' || agentState == 'thinking' || agentState == 'speaking';
+  return agentState == "listening" || agentState == "thinking" || agentState == "speaking";
 }
 
 type PopupProps = {
@@ -56,7 +56,7 @@ export const PopupView = ({
   sessionStarted,
   onEmbedError,
   ref,
-}: React.ComponentProps<'div'> & PopupProps) => {
+}: React.ComponentProps<"div"> & PopupProps) => {
   useDebugMode();
 
   const room = useRoomContext();
@@ -93,12 +93,12 @@ export const PopupView = ({
     const timeout = setTimeout(() => {
       if (!isAgentAvailable(agentState)) {
         const reason =
-          agentState === 'connecting'
-            ? 'Agent did not join the room. '
-            : 'Agent connected but did not complete initializing. ';
+          agentState === "connecting"
+            ? "Agent did not join the room. "
+            : "Agent connected but did not complete initializing. ";
 
         onEmbedError({
-          title: 'Session ended',
+          title: "Session ended",
           description: <p className="w-full">{reason}</p>,
         });
       }
@@ -121,7 +121,7 @@ export const PopupView = ({
             opacity: chatOpen ? 1 : 0,
           }}
           transition={{
-            type: 'spring',
+            type: "spring",
             duration: 0.5,
             bounce: 0,
           }}
@@ -135,23 +135,23 @@ export const PopupView = ({
               key="audio-visualizer"
               initial={{
                 scale: 1,
-                left: '50%',
-                top: '50%',
-                translateX: '-50%',
-                translateY: '-50%',
-                transformOrigin: 'center top',
+                left: "50%",
+                top: "50%",
+                translateX: "-50%",
+                translateY: "-50%",
+                transformOrigin: "center top",
               }}
               animate={{
-                left: chatOpen && (isCameraEnabled || isScreenShareEnabled) ? '39%' : '50%',
+                left: chatOpen && (isCameraEnabled || isScreenShareEnabled) ? "39%" : "50%",
                 scale: chatOpen ? 0.275 : 1,
-                top: chatOpen ? '12px' : '50%',
-                translateY: chatOpen ? '0' : '-50%',
-                transformOrigin: chatOpen ? 'center top' : 'center center',
+                top: chatOpen ? "12px" : "50%",
+                translateY: chatOpen ? "0" : "-50%",
+                transformOrigin: chatOpen ? "center top" : "center center",
               }}
               transition={TILE_TRANSITION}
               className={cn(
-                'bg-bg1 dark:bg-bg2 pointer-events-none absolute flex aspect-square w-64 items-center justify-center rounded-2xl border border-transparent transition-colors',
-                chatOpen && 'border-separator1 dark:border-separator2 drop-shadow-2xl'
+                "bg-bg1 dark:bg-bg2 pointer-events-none absolute flex aspect-square w-64 items-center justify-center rounded-2xl border border-transparent transition-colors",
+                chatOpen && "border-separator1 dark:border-separator2 drop-shadow-2xl"
               )}
             >
               <AudioVisualizer agentState={agentState} audioTrack={agentAudioTrack} />
@@ -166,26 +166,26 @@ export const PopupView = ({
               key="avatar"
               initial={{
                 maskImage:
-                  'radial-gradient(circle, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 1) 40px, transparent 40px)',
-                filter: 'blur(20px)',
+                  "radial-gradient(circle, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 1) 40px, transparent 40px)",
+                filter: "blur(20px)",
               }}
               animate={{
                 opacity: chatOpen ? 0 : 1,
                 maskImage:
-                  'radial-gradient(circle, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 1) 500px, transparent 500px)',
-                filter: 'blur(0px)',
+                  "radial-gradient(circle, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 1) 500px, transparent 500px)",
+                filter: "blur(0px)",
               }}
               transition={{
                 opacity: {
-                  ease: 'linear',
+                  ease: "linear",
                   duration: 0.2,
                 },
                 maskImage: {
-                  ease: 'linear',
+                  ease: "linear",
                   duration: 1,
                 },
                 filter: {
-                  ease: 'linear',
+                  ease: "linear",
                   duration: 1,
                 },
               }}
@@ -209,15 +209,15 @@ export const PopupView = ({
               initial={{
                 opacity: 0,
                 scale: 0.5,
-                left: isCameraEnabled || isScreenShareEnabled ? '39%' : '50%',
-                top: '12px',
-                translateX: '-50%',
-                transformOrigin: 'center top',
+                left: isCameraEnabled || isScreenShareEnabled ? "39%" : "50%",
+                top: "12px",
+                translateX: "-50%",
+                transformOrigin: "center top",
               }}
               animate={{
                 opacity: 1,
                 scale: 1,
-                left: isCameraEnabled || isScreenShareEnabled ? '37.5%' : '50%',
+                left: isCameraEnabled || isScreenShareEnabled ? "37.5%" : "50%",
               }}
               transition={TILE_TRANSITION}
               className="border-separator1 dark:border-separator2 pointer-events-none absolute drop-shadow-lg/20"
@@ -240,16 +240,16 @@ export const PopupView = ({
               initial={{
                 scale: 0.5,
                 opacity: 0,
-                right: '12px',
-                top: '346px',
-                transformOrigin: 'center bottom',
+                right: "12px",
+                top: "346px",
+                transformOrigin: "center bottom",
               }}
               animate={{
                 scale: 1,
                 opacity: 1,
-                top: chatOpen ? '12px' : '346px',
-                right: chatOpen ? '106px' : '12px',
-                transformOrigin: chatOpen ? 'center top' : 'center bottom',
+                top: chatOpen ? "12px" : "346px",
+                right: chatOpen ? "106px" : "12px",
+                transformOrigin: chatOpen ? "center top" : "center bottom",
               }}
               exit={{
                 scale: 0.5,
