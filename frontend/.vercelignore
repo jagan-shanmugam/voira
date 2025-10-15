@@ -23,9 +23,6 @@ docs/
 
 # Development dependencies
 .eslintrc*
-.prettierrc*
-tsconfig.webpack.json
-webpack.config.js
 
 # Logs
 *.log
