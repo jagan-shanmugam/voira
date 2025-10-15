@@ -22,9 +22,9 @@ export function getSandboxId(origin: string) {
 // > React will invalidate the cache for all memoized functions for each server request.
 export const getAppConfig = cache(
   async (origin: string, sandboxIdAttribute?: string): Promise<AppConfig> => {
+    const sandboxId = sandboxIdAttribute ?? getSandboxId(origin);
+    
     if (CONFIG_ENDPOINT) {
-      const sandboxId = sandboxIdAttribute ?? getSandboxId(origin);
-
       try {
         const response = await fetch(CONFIG_ENDPOINT, {
           cache: "no-store",
@@ -32,7 +32,7 @@ export const getAppConfig = cache(
         });
 
         const remoteConfig: SandboxConfig = await response.json();
-        const config: AppConfig = { ...APP_CONFIG_DEFAULTS };
+        const config: AppConfig = { ...APP_CONFIG_DEFAULTS, sandboxId };
 
         for (const [key, entry] of Object.entries(remoteConfig)) {
           if (entry === null) continue;
@@ -52,6 +52,6 @@ export const getAppConfig = cache(
       }
     }
 
-    return APP_CONFIG_DEFAULTS;
+    return { ...APP_CONFIG_DEFAULTS, sandboxId };
   }
 );
