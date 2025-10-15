@@ -77,7 +77,7 @@ export async function POST(req: Request) {
   } catch (error) {
     if (error instanceof Error) {
       console.error(error);
-      return new NextResponse(error.message, { 
+      return new NextResponse(error.message, {
         status: 500,
         headers: corsHeaders,
       });

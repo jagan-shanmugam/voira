@@ -23,7 +23,7 @@ export function getSandboxId(origin: string) {
 export const getAppConfig = cache(
   async (origin: string, sandboxIdAttribute?: string): Promise<AppConfig> => {
     const sandboxId = sandboxIdAttribute ?? getSandboxId(origin);
-    
+
     if (CONFIG_ENDPOINT) {
       try {
         const response = await fetch(CONFIG_ENDPOINT, {
